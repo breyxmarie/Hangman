@@ -1,0 +1,74 @@
+import random
+
+def getword():
+
+    with open('words.txt', 'r') as txt:
+        wo = []
+        scraword = txt.readlines()
+        num = random.randint(0, len(scraword))
+        word = str(scraword[num])
+        print(word)
+        txt.close()
+        return word
+
+def chckletters():
+    global word, gword
+    word = getword()
+        #getword()
+
+    #word = "EVAPORATE"
+    gword = []
+    while len(gword) + 1 < len(word):
+        gword.append("_")
+    x = " ".join(gword)
+    print(x)
+    return word, gword
+
+def inputans():
+    word, gword = chckletters()
+    dup = []
+    wn = []
+    guesses = 0
+    while '_' in gword:
+        guess = input("Guess The word: ").capitalize()
+        if guess not in word:
+            if guess in wn:
+                print("WRONG")
+                print("Opps you have already entered that letter")
+            else:
+                wn.append(guess)
+                print("WRONG")
+        elif guess in wn:
+            print("Opps you have already entered that letter")
+        for letter in word:
+            if letter == guess:
+                pos = word.index(letter)
+                start = pos + 1
+                if letter in gword:
+                    if letter in dup:
+                        pos = word.index(letter)
+                        starts = pos + len(dup) + 1
+                        indices = word.index(letter, starts)
+                        gword[indices] = letter
+                        y = " ".join(gword)
+                        dup.append(letter)
+                        wn.append(letter)
+                    else:
+                        indices = word.index(letter, start)
+                        gword[indices] = letter
+                        y = " ".join(gword)
+                        dup.append(letter)
+                        wn.append(letter)
+                else:
+                    pos = word.index(letter)
+                    gword[pos] = letter
+                    wn.append(letter)
+                    y = " ".join(gword)
+        y = " ".join(gword)
+        print(y)
+        guesses += 1
+    print("Number of Guesses: " + str(guesses))
+        #return y, gword,
+if __name__ == "__main__":
+        #chckletters()
+    inputans()
