@@ -1,8 +1,9 @@
 import random
 
-def getword():
 
-    with open('words.txt', 'r') as txt:
+    
+def getword():
+    with open('/Users/AUBREY MARIE/PycharmProjects/draft/handman/mgawords.txt', 'r') as txt:
         wo = []
         scraword = txt.readlines()
         num = random.randint(0, len(scraword))
@@ -24,50 +25,87 @@ def chckletters():
     print(x)
     return word, gword
 
+
 def inputans():
     word, gword = chckletters()
     dup = []
     wn = []
     guesses = 0
-    while '_' in gword:
+    while guesses < 6:
         guess = input("Guess The word: ").capitalize()
-        if guess not in word:
-            if guess in wn:
-                print("WRONG")
-                print("Opps you have already entered that letter")
-            else:
-                wn.append(guess)
-                print("WRONG")
-        elif guess in wn:
+
+        if guess not in word and guess in wn:
+            print("WRONG")
             print("Opps you have already entered that letter")
-        for letter in word:
-            if letter == guess:
-                pos = word.index(letter)
-                start = pos + 1
-                if letter in gword:
-                    if letter in dup:
-                        pos = word.index(letter)
-                        starts = pos + len(dup) + 1
-                        indices = word.index(letter, starts)
-                        gword[indices] = letter
-                        y = " ".join(gword)
-                        dup.append(letter)
-                        wn.append(letter)
-                    else:
-                        indices = word.index(letter, start)
-                        gword[indices] = letter
-                        y = " ".join(gword)
-                        dup.append(letter)
-                        wn.append(letter)
-                else:
+            y = " ".join(gword)
+            print(y)
+            if guesses == 6:
+                None
+            else:
+                print("You still have " + str(6 - guesses) + " guesses left")
+        elif guess not in word and guess not in wn:
+            wn.append(guess)
+            print("WRONG")
+            y = " ".join(gword)
+            print(y)
+            guesses += 1
+
+            if guesses == 6:
+                None
+            else:
+                print("You still have " + str(6 - guesses) + " guesses left")
+
+        elif guess in word and guess in wn:
+            print("Opps you have already entered that letter")
+            y = " ".join(gword)
+            print(y)
+            if guesses == 6:
+                None
+            else:
+                print("You still have " + str(6 - guesses) + " guesses left")
+        elif guess in word and guess not in wn:
+            for letter in word:
+                if letter == guess:
                     pos = word.index(letter)
-                    gword[pos] = letter
-                    wn.append(letter)
-                    y = " ".join(gword)
-        y = " ".join(gword)
-        print(y)
-        guesses += 1
-    print("Number of Guesses: " + str(guesses))
+                    start = pos + 1
+                    if letter in gword:
+                        if letter in dup:
+                            pos = word.index(letter)
+                            starts = pos + len(dup) + 1
+                            indices = word.index(letter, starts)
+                            gword[indices] = letter
+                            y = " ".join(gword)
+                            dup.append(letter)
+                            wn.append(guess)
+                            if guesses == 6:
+                                None
+                            else:
+                                print("You still have " + str(6 - guesses) + " guesses left")
+                        elif letter not in dup:
+                            indices = word.index(letter, start)
+                            gword[indices] = letter
+                            y = " ".join(gword)
+                            dup.append(letter)
+                            wn.append(guess)
+                            guesses += 1
+                            #print("You still have " + str(6 - guesses) + " guesses left")
+                            #guesses += 1
+                    elif letter not in gword:
+                        pos = word.index(letter)
+                        gword[pos] = letter
+                        wn.append(guess)
+                        y = " ".join(gword)
+                        guesses += 1
+                        if guesses == 6:
+                            None
+                        else:
+                            print("You still have " + str(6 - guesses) + " guesses left")
+
+            y = " ".join(gword)
+            print(y)
+       # guesses += 1
+    print("Oh No! You are out of guesses")
+
         #return y, gword,
 if __name__ == "__main__":
         #chckletters()
