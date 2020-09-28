@@ -2,9 +2,9 @@ import random
 from PIL import Image
 def imagehang():
     global guesses, wrongguess
-    '''if wrongguess == 0:
+    if wrongguess == 0:
         none = Image.open("/Users/AUBREY MARIE/PycharmProjects/draft/handman/none.png")
-        none.show()'''
+        none.show()
     if wrongguess == 1:
         heads = Image.open("/Users/AUBREY MARIE/PycharmProjects/draft/handman/head.png")
         heads.show()
